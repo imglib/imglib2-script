@@ -59,7 +59,6 @@
 			<version>${imagej1.version}</version>
 		</dependency>
 		<dependency>
-			<!-- FIXME: NOT IN CENTRAL -->
 			<groupId>mpicbg</groupId>
 			<artifactId>mpicbg</artifactId>
 			<version>${mpicbg.version}</version>
