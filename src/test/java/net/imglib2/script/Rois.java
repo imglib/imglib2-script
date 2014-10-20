@@ -24,49 +24,58 @@
  * #L%
  */
 
-package script.imglib.test;
+package net.imglib2.script;
 
 import ij.ImageJ;
+import ij.ImagePlus;
+import ij.gui.Roi;
+import ij.process.FloatProcessor;
 import net.imglib2.img.Img;
-import net.imglib2.script.ImgLib;
-import net.imglib2.script.edit.Insert;
-import net.imglib2.script.img.FloatImage;
+import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.script.math.Add;
-import net.imglib2.script.math.Compute;
-import net.imglib2.script.math.fn.ImageFunction;
 import net.imglib2.script.view.RectangleROI;
+import net.imglib2.type.NativeType;
+import net.imglib2.type.numeric.NumericType;
 import net.imglib2.type.numeric.real.FloatType;
 
 /**
  * TODO
  *
  */
-public class Insert_and_RectangleROI {
+public class Rois {
 
-	@SuppressWarnings("boxing")
-	static public final void main(String[] args) {
-		// Create image
-		long[] dim = new long[]{512, 512};
+	static public final <T extends NumericType<T> & NativeType<T>> void main(final String[] args) {
 		
-		Img<FloatType> im1 = new FloatImage(dim);
-
-		// Create two images with various areas filled
-		Add fn1 = new Add(127, new RectangleROI<FloatType>(im1, 100, 100, dim[0] - 200, dim[1] - 200));
-		Add fn2 = new Add(255, new RectangleROI<FloatType>(im1, 0, 0, 100, 100));
-
+		// Generate some data
+		final FloatProcessor b1 = new FloatProcessor(512, 512);
+		b1.setValue(127);
+		b1.setRoi(new Roi(100, 100, 200, 200));
+		b1.fill();
+		
+		final FloatProcessor b2 = new FloatProcessor(512, 512);
+		b2.setValue(128);
+		b2.setRoi(new Roi(10, 30, 200, 200));
+		b2.fill();
+		
+		final Img<T> img1 = ImageJFunctions.wrap(new ImagePlus("1", b1));
+		final Img<T> img2 = ImageJFunctions.wrap(new ImagePlus("2", b2));
+		
+		
+		// Add two ROIs of both images
+		final RectangleROI<T> r1 = new RectangleROI<T>(img1, 50, 50, 200, 200);
+		final RectangleROI<T> r2 = new RectangleROI<T>(img2, 50, 50, 200, 200);
 		try {
-			// Insert the second into the first
-			Insert<FloatType, Img<FloatType>, FloatType> fn3 =
-				new Insert<FloatType, Img<FloatType>, FloatType>(fn2.asImage(), fn1.asImage(), new long[]{-50, -20});
-			Insert<FloatType, Img<FloatType>, FloatType> fn4 =
-				new Insert<FloatType, Img<FloatType>, FloatType>(fn2.asImage(), fn1.asImage(), new long[]{250, 300});
+			final Img<FloatType> result = new Add(r1, r2).asImage(1);
 			
 			new ImageJ();
 			
-			ImgLib.show(Compute.inFloats(new ImageFunction<FloatType>(fn3)));
-			ImgLib.show(Compute.inFloats(new ImageFunction<FloatType>(fn4)));
-			
-		} catch (Exception e) {
+			ImageJFunctions.show(r1, "r1");
+			ImageJFunctions.show(r2, "r2");
+			ImageJFunctions.show(img1, "img1");
+			ImageJFunctions.show(img2, "img2");
+			ImageJFunctions.show(result, "added rois");
+
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}

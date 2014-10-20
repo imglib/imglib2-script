@@ -1,4 +1,4 @@
-package script.imglib.test;
+package net.imglib2.script;
 
 import static org.junit.Assert.assertTrue;
 import ij.ImageJ;

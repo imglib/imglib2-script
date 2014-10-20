@@ -1,4 +1,4 @@
-package script.imglib.test;
+package net.imglib2.script;
 
 import ij.ImageJ;
 import ij.ImagePlus;

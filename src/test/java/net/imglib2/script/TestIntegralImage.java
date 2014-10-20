@@ -24,35 +24,40 @@
  * #L%
  */
 
-package script.imglib.test;
+package net.imglib2.script;
 
 import ij.ImageJ;
-import net.imglib2.img.Img;
+import net.imglib2.Cursor;
+import net.imglib2.RandomAccess;
+import net.imglib2.exception.ImgLibException;
 import net.imglib2.script.ImgLib;
-import net.imglib2.script.slice.SliceXY;
-import net.imglib2.type.numeric.integer.UnsignedByteType;
+import net.imglib2.script.algorithm.IntegralImage;
+import net.imglib2.script.img.FloatImage;
+import net.imglib2.type.numeric.real.DoubleType;
+import net.imglib2.type.numeric.real.FloatType;
 
 /**
  * TODO
  *
  */
-public class Slices {
+public class TestIntegralImage {
 
 	static public final void main(String[] args) {
-		
-		new ImageJ();
-		
 		try {
-			String src = "http://imagej.nih.gov/ij/images/bat-cochlea-volume.zip";
-			//String src = "/home/albert/Desktop/t2/bat-cochlea-volume.tif";	
-			Img<UnsignedByteType> img = ImgLib.open(src);
+			FloatImage fi = new FloatImage(new long[]{10, 10, 10});
+			Cursor<FloatType> c = fi.cursor();
+			while (c.hasNext()) {
+				c.next().set(1);
+			}
+			IntegralImage ig = new IntegralImage(fi);
 			
-			Img<UnsignedByteType> s = new SliceXY<UnsignedByteType>(img, 23);
-
-			ImgLib.wrap(s, "23").show();
-			ImgLib.wrap(img, "bat").show();
-
-		} catch (Exception e) {
+			RandomAccess<DoubleType> p = ig.randomAccess();
+			p.setPosition(new long[]{9, 9, 9});
+			System.out.println("Test integral image passed: " + ((10 * 10 * 10) == p.get().get()));
+			
+			new ImageJ();
+			ImgLib.show(ig, "Integral Image");
+		} catch (ImgLibException e) {
 			e.printStackTrace();
 		}
 	}
