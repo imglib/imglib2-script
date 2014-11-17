@@ -76,7 +76,7 @@ public class Insert<T extends RealType<T>, RI extends IterableInterval<T> & Rand
 				this.max[i] = (long) Math.min(offset[i] + source.realMax(i), target.realMax(i));
 			}
 			RandomAccessibleInterval<T> view = Views.interval(source, min, max);
-			this.copier = source.equalIterationOrder(target) ? new CompatibleCopier(view) : new RandomAccessCopier(view);
+			this.copier = source.iterationOrder().equals(target.iterationOrder()) ? new CompatibleCopier(view) : new RandomAccessCopier(view);
 		}
 		
 		private final IterableInterval<Y> paste() {

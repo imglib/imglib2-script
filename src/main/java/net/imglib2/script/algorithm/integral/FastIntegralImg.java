@@ -3,19 +3,20 @@ package net.imglib2.script.algorithm.integral;
 import net.imglib2.Cursor;
 import net.imglib2.Interval;
 import net.imglib2.RandomAccess;
+import net.imglib2.algorithm.integral.IntegralImg;
 import net.imglib2.converter.Converter;
 import net.imglib2.img.Img;
-import net.imglib2.img.ImgPlus;
 import net.imglib2.img.array.ArrayImg;
 import net.imglib2.img.array.ArrayImgFactory;
 import net.imglib2.img.basictypeaccess.array.ArrayDataAccess;
 import net.imglib2.img.basictypeaccess.array.ByteArray;
-import net.imglib2.img.basictypeaccess.array.LongArray;
-import net.imglib2.img.basictypeaccess.array.ShortArray;
-import net.imglib2.img.basictypeaccess.array.IntArray;
 import net.imglib2.img.basictypeaccess.array.DoubleArray;
 import net.imglib2.img.basictypeaccess.array.FloatArray;
+import net.imglib2.img.basictypeaccess.array.IntArray;
+import net.imglib2.img.basictypeaccess.array.LongArray;
+import net.imglib2.img.basictypeaccess.array.ShortArray;
 import net.imglib2.img.planar.PlanarImg;
+import net.imglib2.meta.ImgPlus;
 import net.imglib2.script.algorithm.fn.ImgProxy;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.IntegerType;
@@ -24,6 +25,7 @@ import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.LongType;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.type.numeric.integer.UnsignedIntType;
+import net.imglib2.type.numeric.integer.UnsignedLongType;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 import net.imglib2.type.numeric.real.DoubleType;
 import net.imglib2.type.numeric.real.FloatType;
@@ -58,17 +60,15 @@ import net.imglib2.view.Views;
 public class FastIntegralImg<R extends RealType<R>, T extends NativeType<T> & NumericType<T>> extends ImgProxy<T>
 {
 	/** Chooses the smallest type possible to hold the sums; may have to iterate all values and sum them to find out. */
-	@SuppressWarnings("unchecked")
 	public FastIntegralImg(final Img<R> img) {
-		super(create(img, (T) computeSmallestType(img), null));
+		super(create(img, (Converter<R,T>)null));
 	}
 	
 	/** Chooses the smallest type possible to hold the sums. */
 	@SuppressWarnings("unchecked")
 	public FastIntegralImg(final Img<R> img, final Converter<R, T> converter) {
-		super(create(img, (T) computeSmallestType(img), converter));
+		super(create(img, converter));
 	}
-
 
 	/**
 	 * 
@@ -113,18 +113,25 @@ public class FastIntegralImg<R extends RealType<R>, T extends NativeType<T> & Nu
 	@SuppressWarnings("unchecked")
 	static private final <R extends RealType<R>, T extends NativeType<T> & NumericType<T>> T chooseSmallestType(final R srcType, final double maxSum) {
 		if (IntegerType.class.isAssignableFrom(srcType.getClass())) {
-			if (maxSum < Math.pow(2, 8)) return (T) new UnsignedByteType();
-			if (maxSum < Math.pow(2, 16)) return (T) new UnsignedShortType();
-			if (maxSum < Math.pow(2, 32)) return (T) new UnsignedIntType();
-			if (maxSum < Math.pow(2, 64)) return (T) new LongType();
+			if (maxSum < Math.pow(2, 8)) return (T)(Object) new UnsignedByteType();
+			if (maxSum < Math.pow(2, 16)) return (T)(Object) new UnsignedShortType();
+			if (maxSum < Math.pow(2, 32)) return (T)(Object) new UnsignedIntType();
+			if (maxSum < Math.pow(2, 64)) return (T)(Object) new LongType();
 		} else {
-			if (maxSum <= Float.MAX_VALUE) return (T) new FloatType();
-			if (maxSum <= Double.MAX_VALUE) return (T) new DoubleType();
+			if (maxSum <= Float.MAX_VALUE) return (T)(Object) new FloatType();
+			if (maxSum <= Double.MAX_VALUE) return (T)(Object) new DoubleType();
 		}
 		return null;
 	}
 	
 	static private final <R extends NumericType<R>, T extends NativeType<T> & NumericType<T>> Img<T> create(final Img<R> img, final T type, final Converter<R, T> converter) {
+		final Img<T> iimg = type.createSuitableNativeImg(new ArrayImgFactory<T>(), dimensions(img));
+		integrateInto(img, iimg, type, converter);
+		return iimg;
+	}
+	
+	static private final <R extends RealType<R>, T extends NativeType<T> & NumericType<T>> Img<T> create(final Img<R> img, final Converter<R, T> converter) {
+		T type = computeSmallestType(img);
 		final Img<T> iimg = type.createSuitableNativeImg(new ArrayImgFactory<T>(), dimensions(img));
 		integrateInto(img, iimg, type, converter);
 		return iimg;
@@ -548,7 +555,7 @@ public class FastIntegralImg<R extends RealType<R>, T extends NativeType<T> & Nu
 		}
 	}
 	
-	static private final <R extends NumericType<R>, T extends NumericType<T>> void integrateRows(
+	static private final <T extends NumericType<T>> void integrateRows(
 			final int rowDimension,
 			final Interval iimg,
 			final RandomAccess<T> r2,
@@ -578,7 +585,7 @@ public class FastIntegralImg<R extends RealType<R>, T extends NativeType<T> & Nu
 		}
 	}
 
-	static private final <R extends NumericType<R>, T extends NumericType<T>> void integrateRow(
+	static private final <T extends NumericType<T>> void integrateRow(
 			final int rowDimension,
 			final Interval iimg,
 			final RandomAccess<T> r2,

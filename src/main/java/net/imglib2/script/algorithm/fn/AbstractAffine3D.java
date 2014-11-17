@@ -28,7 +28,6 @@ package net.imglib2.script.algorithm.fn;
 
 import mpicbg.models.AffineModel2D;
 import mpicbg.models.AffineModel3D;
-import net.imglib2.ExtendedRandomAccessibleInterval;
 import net.imglib2.RandomAccessible;
 import net.imglib2.algorithm.transformation.ImageTransform;
 import net.imglib2.img.Img;
@@ -48,6 +47,7 @@ import net.imglib2.type.numeric.ARGBType;
 import net.imglib2.type.numeric.NumericType;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.real.FloatType;
+import net.imglib2.view.ExtendedRandomAccessibleInterval;
 import net.imglib2.view.Views;
 
 /** Convenient intermediate class to be able to operate directly on an {@link Image} argument in the constructor. */

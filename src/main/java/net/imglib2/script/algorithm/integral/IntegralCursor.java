@@ -7,7 +7,7 @@ import net.imglib2.img.Img;
 import net.imglib2.type.numeric.NumericType;
 import net.imglib2.util.IntervalIndexer;
 import net.imglib2.util.Pair;
-import net.imglib2.util.Util;
+import net.imglib2.util.ValuePair;
 
 public class IntegralCursor<T extends NumericType<T>> extends Point implements RandomAccess<Pair<T, long[]>>, Cursor<Pair<T, long[]>>
 {
@@ -43,13 +43,14 @@ public class IntegralCursor<T extends NumericType<T>> extends Point implements R
 		this.radius = radius;
 		this.sum = integralImg.firstElement().createVariable();
 		this.tmp = this.sum.createVariable();
-		this.packet = new Pair<T, long[]>(sum, new long[1]);
+		this.packet = new ValuePair<T, long[]>(sum, new long[1]);
 		this.cellMinPositions = new long[integralImg.numDimensions()];
 		this.cellMaxPositions = new long[integralImg.numDimensions()];
 
 		
 		// Establish the dimensions where this Cursor/RandomAccess is defined:
-		this.dimensions = Util.intervalDimensions(integralImg);
+		this.dimensions = new long[integralImg.numDimensions()];
+		integralImg.dimensions(this.dimensions);
 		
 		// Compute the size of the underlying, original image from which the integralHistogram was computed:
 		this.lastIndex = integralImg.size() - 1;
@@ -127,7 +128,7 @@ public class IntegralCursor<T extends NumericType<T>> extends Point implements R
 		for (int d=0; d<numDimensions(); ++d) {
 			count *= cellMaxPositions[d] - cellMinPositions[d] + 1;
 		}
-		packet.b[0] = count;
+		packet.getB()[0] = count;
 		return packet;
 	}
 

@@ -2,13 +2,13 @@ package net.imglib2.script;
 
 import ij.ImageJ;
 import ij.ImagePlus;
+import io.scif.img.ImgOpener;
 import net.imglib2.Cursor;
 import net.imglib2.RandomAccess;
 import net.imglib2.img.Img;
+import net.imglib2.img.array.ArrayImgFactory;
 import net.imglib2.img.imageplus.ImagePlusImg;
 import net.imglib2.img.imageplus.ImagePlusImgFactory;
-import net.imglib2.io.ImgOpener;
-import net.imglib2.script.ImgLib;
 import net.imglib2.script.algorithm.integral.histogram.Histogram;
 import net.imglib2.script.algorithm.integral.histogram.IntegralHistogram;
 import net.imglib2.script.algorithm.integral.histogram.IntegralHistogramCursor;
@@ -169,7 +169,7 @@ public class ExampleIntegralHistograms<T extends RealType<T> & NativeType<T>>
 				radius2 = new long[]{10, 10};
 				break;
 			}
-			Img<UnsignedByteType> img = new ImgOpener().openImg(src);
+			Img<UnsignedByteType> img = new ImgOpener().openImg(src, new ArrayImgFactory<UnsignedByteType>(), new UnsignedByteType());
 			UnsignedByteType min = new UnsignedByteType(0);
 			UnsignedByteType max = new UnsignedByteType(255);
 			new ExampleIntegralHistograms<UnsignedByteType>(img, min, max, radius1, radius2);

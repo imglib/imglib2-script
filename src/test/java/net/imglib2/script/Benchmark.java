@@ -28,6 +28,7 @@ package net.imglib2.script;
 
 import ij.ImageJ;
 import ij.ImagePlus;
+import io.scif.img.ImgOpener;
 import net.imglib2.Cursor;
 import net.imglib2.RandomAccess;
 import net.imglib2.exception.ImgLibException;
@@ -35,7 +36,6 @@ import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
 import net.imglib2.img.imageplus.ImagePlusImg;
 import net.imglib2.img.imageplus.ImagePlusImgFactory;
-import io.scif.img.ImgOpener;
 import net.imglib2.script.math.ASin;
 import net.imglib2.script.math.Add;
 import net.imglib2.script.math.Cbrt;
@@ -53,7 +53,6 @@ import net.imglib2.script.math.Subtract;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.type.numeric.real.FloatType;
-import net.imglib2.util.Util;
 
 /* Tested in a MacBookPro 5,5, 4 Gb RAM, 2.4 Ghz
  * running Ubuntu 10.04 with Java 1.6.0_21
@@ -150,7 +149,7 @@ public class Benchmark {
 			final double mean) {
 		p("Start direct (correct illumination)...");
 		long t0 = System.nanoTime();
-		Img<FloatType> corrected = new ArrayImgFactory<FloatType>().create(Util.intervalDimensions(img), new FloatType());
+		Img<FloatType> corrected = new ArrayImgFactory<FloatType>().create(img, new FloatType());
 		final Cursor<FloatType> c = corrected.cursor();
 		final Cursor<? extends RealType<?>> ci = img.cursor(),
 											cb = brightfield.cursor(),
@@ -189,7 +188,7 @@ public class Benchmark {
 			final Img<? extends RealType<?>> img) {
 		p("Start direct with heavy operations...");
 		long t0 = System.currentTimeMillis();
-		Img<FloatType> corrected = new ArrayImgFactory<FloatType>().create(Util.intervalDimensions(img), new FloatType());
+		Img<FloatType> corrected = new ArrayImgFactory<FloatType>().create(img, new FloatType());
 		final Cursor<FloatType> c = corrected.cursor();
 		final Cursor<? extends RealType<?>> ci = img.cursor();
 		while (c.hasNext()) {
@@ -331,7 +330,7 @@ public class Benchmark {
 
 			// A simulated brightfield image
 			// Until Gauss is restored, just use an image with half-tone
-			Img<UnsignedByteType> brightfield = img.factory().create(Util.intervalDimensions(img), new UnsignedByteType());
+			Img<UnsignedByteType> brightfield = img.factory().create(img, new UnsignedByteType());
 			for (UnsignedByteType t : brightfield) {
 				t.set(127);
 			}
@@ -343,7 +342,7 @@ public class Benchmark {
 			copyToFloatImagePlus(Compute.inFloats(1, new Identity(img)), "identity").show();
 			
 			// A black image: empty
-			Img<UnsignedByteType> darkfield = img.factory().create(Util.intervalDimensions(img), new UnsignedByteType());
+			Img<UnsignedByteType> darkfield = img.factory().create(img, new UnsignedByteType());
 
 			// Test:
 			for (int i=0; i<4; i++) {

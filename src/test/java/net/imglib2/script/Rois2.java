@@ -30,10 +30,11 @@ import ij.ImageJ;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.Img;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.sampler.special.ConstantRandomAccessible;
 import net.imglib2.script.math.Add;
 import net.imglib2.script.view.RectangleROI;
 import net.imglib2.type.numeric.real.FloatType;
+import net.imglib2.util.ConstantUtils;
+import net.imglib2.util.Intervals;
 import net.imglib2.view.Views;
 
 /**
@@ -53,11 +54,9 @@ public class Rois2 {
 				// The outside, with value 0
 				Views.extendValue(
 					// The ROI filled with value 127
-					Views.interval(
-						new ConstantRandomAccessible<FloatType>(new FloatType(127), 2),
-						// The domain of the ROI
-						new long[]{100, 100},
-						new long[]{399, 399}),
+					ConstantUtils.constantRandomAccessibleInterval(new FloatType(127), 2,
+							// The domain of the ROI
+							Intervals.createMinMax( 100, 100, 399, 399)),
 					new FloatType(0)),
 				// The domain of the image
 				new long[]{0, 0},
@@ -70,11 +69,9 @@ public class Rois2 {
 				// The outside, with value 0
 				Views.extendValue(
 					// The ROI filled with value 128
-					Views.interval(
-						new ConstantRandomAccessible<FloatType>(new FloatType(128), 2),
-						// The domain of the ROI
-						new long[]{10, 30},
-						new long[]{209, 229}),
+					ConstantUtils.constantRandomAccessibleInterval(new FloatType(127), 2,
+							// The domain of the ROI
+							Intervals.createMinMax( 10, 30, 209, 229)),
 					new FloatType(0)),
 				// The domain of the image
 				new long[]{0, 0},

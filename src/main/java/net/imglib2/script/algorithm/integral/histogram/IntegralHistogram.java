@@ -33,7 +33,8 @@ public class IntegralHistogram
 			final Img<T> img,
 			final Histogram<T> histogram)
 	{
-		return create(img, histogram, (R) chooseBestType(computeBits(img)));
+		R chooseBestType = chooseBestType(computeBits(img));
+		return create(img, histogram, chooseBestType);
 	}
 
 	static public <T extends RealType<T>, R extends IntegerType<R> & NativeType<R>> Img<R> create(
@@ -69,13 +70,13 @@ public class IntegralHistogram
 		return integralHistogram;
 	}
 	
-	static private final <R extends RealType<R> & NativeType<R>> R chooseBestType(final int nBits) {
+	static private final <R extends IntegerType<R> & NativeType<R>> R chooseBestType(final int nBits) {
 		
-		if (nBits < 9) return (R) new UnsignedByteType();
-		else if (nBits< 13) return (R) new Unsigned12BitType();
-		else if (nBits < 17) return (R) new UnsignedShortType();
-		else if (nBits < 33) return (R) new UnsignedIntType();
-		else if (nBits < 65) return (R) new LongType();
+		if (nBits < 9) return (R)(Object) new UnsignedByteType();
+		else if (nBits< 13) return (R)(Object) new Unsigned12BitType();
+		else if (nBits < 17) return (R)(Object) new UnsignedShortType();
+		else if (nBits < 33) return (R)(Object) new UnsignedIntType();
+		else if (nBits < 65) return (R)(Object) new LongType();
 		else throw new IllegalArgumentException("Cannot do an histogram of " + nBits + " bits.");
 		/*
 		switch (nBits) {

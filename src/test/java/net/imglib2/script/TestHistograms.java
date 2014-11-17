@@ -6,6 +6,7 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.filter.RankFilters;
 import ij.process.ImageProcessor;
+import io.scif.img.ImgOpener;
 import net.imglib2.Cursor;
 import net.imglib2.Point;
 import net.imglib2.RandomAccess;
@@ -14,11 +15,9 @@ import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
 import net.imglib2.img.imageplus.ImagePlusImg;
 import net.imglib2.img.imageplus.ImagePlusImgFactory;
-import net.imglib2.io.ImgOpener;
-import net.imglib2.script.ImgLib;
 import net.imglib2.script.algorithm.integral.histogram.Histogram;
-import net.imglib2.script.algorithm.integral.histogram.IntegralHistogramCursor;
 import net.imglib2.script.algorithm.integral.histogram.IntegralHistogram;
+import net.imglib2.script.algorithm.integral.histogram.IntegralHistogramCursor;
 import net.imglib2.script.algorithm.integral.histogram.LinearHistogram;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.IntegerType;
@@ -26,19 +25,18 @@ import net.imglib2.type.numeric.integer.IntType;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 import net.imglib2.util.Util;
-import net.imglib2.view.Views;
 
 import org.junit.Test;
 
 public class TestHistograms {
 
-	static public final void main(String[] arg) {
+	static public final <T extends IntegerType<T> & NativeType<T>> void main(String[] arg) {
 		new ImageJ();
 		TestHistograms t = new TestHistograms();
 		//t.testFeatures();
 		//t.testHistogramOf3x3Img();
 		//t.comparePerformance();
-		t.testHistogramOf2x2x2Img();
+		t.<T>testHistogramOf2x2x2Img();
 	}
 	
 	public void testCorners() {
@@ -64,7 +62,7 @@ public class TestHistograms {
 	
 	public void testFeatures() {
 		try {
-			Img<UnsignedByteType> img = new ImgOpener().openImg("/home/albert/Desktop/t2/bridge-crop-streched-smoothed.tif");
+			Img<UnsignedByteType> img = (Img<UnsignedByteType>) new ImgOpener().openImgs("/home/albert/Desktop/t2/bridge-crop-streched-smoothed.tif").get(0);
 			ImgLib.wrap(img, "Original").show();
 			long[] radius = new long[]{10, 10}; // radius=1 is equivalent to ImageJ's radius=1 in RankFilters
 			LinearHistogram<UnsignedByteType> lh = new LinearHistogram<UnsignedByteType>(256, img.numDimensions(), new UnsignedByteType(0), new UnsignedByteType(255));
@@ -79,7 +77,7 @@ public class TestHistograms {
 	public void comparePerformance() {
 		try {
 			ij.Prefs.setThreads(1);
-			Img<UnsignedByteType> img = new ImgOpener().openImg("/home/albert/Desktop/t2/bridge.tif");
+			Img<UnsignedByteType> img = (Img<UnsignedByteType>) new ImgOpener().openImgs("/home/albert/Desktop/t2/bridge.tif").get(0);
 			ImgLib.wrap(img, "Original").show();
 			
 			long t0 = System.currentTimeMillis();
@@ -358,7 +356,7 @@ public class TestHistograms {
 	 * 2 4    4 8
 	 */
 	@Test
-	public <T extends IntegerType<T> & NativeType<T> >void testHistogramOf2x2x2Img() {
+	public <T extends IntegerType<T> & NativeType<T>> void testHistogramOf2x2x2Img() {
 		Img<UnsignedByteType> img =
 				new UnsignedByteType().createSuitableNativeImg(
 						new ArrayImgFactory<UnsignedByteType>(),

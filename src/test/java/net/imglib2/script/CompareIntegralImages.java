@@ -1,12 +1,12 @@
 package net.imglib2.script;
 
+import io.scif.img.ImgOpener;
 import net.imglib2.Cursor;
 import net.imglib2.algorithm.integral.IntegralImg;
 import net.imglib2.converter.Converter;
 import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
-import net.imglib2.io.ImgOpener;
-import net.imglib2.script.ImgLib;
+import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.script.algorithm.integral.FastIntegralImg;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;
@@ -16,6 +16,7 @@ import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 import net.imglib2.type.numeric.real.DoubleType;
 import net.imglib2.type.numeric.real.FloatType;
+import net.imglib2.util.Intervals;
 import net.imglib2.util.Util;
 
 public class CompareIntegralImages
@@ -23,10 +24,10 @@ public class CompareIntegralImages
 	static public final void main(String[] arg) {
 		final String src = "/home/albert/lab/TEM/abd/microvolumes/Seg/180-220-int/180-220-int-00.tif";
 		try {
-			final Img<UnsignedByteType> img = new ImgOpener().openImg(src);
+			final Img<UnsignedByteType> img = new ImgOpener().openImg(src, new ArrayImgFactory<UnsignedByteType>(), new UnsignedByteType());
 			
 			// copy as short
-			Img<UnsignedShortType> copyShort = new UnsignedShortType().createSuitableNativeImg(new ArrayImgFactory<UnsignedShortType>(), Util.intervalDimensions(img));
+			Img<UnsignedShortType> copyShort = ArrayImgs.unsignedShorts(Intervals.dimensionsAsLongArray(img));
 			Cursor<UnsignedByteType> c1 = img.cursor();
 			Cursor<UnsignedShortType> c2 = copyShort.cursor();
 			while (c1.hasNext()) {
@@ -34,7 +35,7 @@ public class CompareIntegralImages
 			}
 			
 			// copy as float
-			Img<FloatType> copyFloat = new FloatType().createSuitableNativeImg(new ArrayImgFactory<FloatType>(), Util.intervalDimensions(img));
+			Img<FloatType> copyFloat =  ArrayImgs.floats(Intervals.dimensionsAsLongArray(img));
 			c1.reset();
 			Cursor<FloatType> c3 = copyFloat.cursor();
 			while (c1.hasNext()) {

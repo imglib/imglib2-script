@@ -30,7 +30,6 @@ import java.util.Iterator;
 
 import net.imglib2.Cursor;
 import net.imglib2.IterableInterval;
-import net.imglib2.IterableRealInterval;
 import net.imglib2.Positionable;
 import net.imglib2.RealPositionable;
 
@@ -65,12 +64,6 @@ public class IterableIntervalProxy<T> implements IterableInterval<T>
 	public Object iterationOrder()
 	{
 		return iti.iterationOrder();
-	}
-
-	@Override
-	public boolean equalIterationOrder( final IterableRealInterval< ? > f )
-	{
-		return iterationOrder().equals( f.iterationOrder() );
 	}
 
 	@Override

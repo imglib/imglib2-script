@@ -1,15 +1,13 @@
 package net.imglib2.script;
 
 import ij.ImageJ;
+import io.scif.img.ImgIOException;
+import io.scif.img.ImgOpener;
 import net.imglib2.RandomAccess;
 import net.imglib2.converter.Converter;
 import net.imglib2.exception.ImgLibException;
-import net.imglib2.exception.IncompatibleTypeException;
 import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
-import net.imglib2.io.ImgIOException;
-import net.imglib2.io.ImgOpener;
-import net.imglib2.script.ImgLib;
 import net.imglib2.script.algorithm.integral.FastIntegralImg;
 import net.imglib2.script.algorithm.integral.IntegralCursor;
 import net.imglib2.type.numeric.IntegerType;
@@ -36,10 +34,10 @@ public class ExampleIntegralImageFeatures
 		}
 	}
 	
-	public ExampleIntegralImageFeatures() throws ImgIOException, IncompatibleTypeException {
+	public ExampleIntegralImageFeatures() throws ImgIOException {
 		// Open an image
 		String src = "/home/albert/lab/TEM/abd/microvolumes/Seg/180-220-int/180-220-int-00.tif"; // 2d
-		final Img<UnsignedByteType> img = new ImgOpener().openImg(src);
+		final Img<UnsignedByteType> img = (Img<UnsignedByteType>) new ImgOpener().openImgs(src).get(0);
 		
 		// Integral image
 		final Img<LongType> integralImg = new FastIntegralImg<UnsignedByteType, LongType>(img, new LongType(), new IdentityConverter<UnsignedByteType, LongType>());
@@ -69,16 +67,16 @@ public class ExampleIntegralImageFeatures
 			cf.setPosition(c1);
 			// 1. The sum
 			cf.setPosition(0, dims.length -1);
-			cf.get().set(sum.a.getRealFloat());
+			cf.get().set(sum.getA().getRealFloat());
 			// 2. The sum of squares
 			cf.fwd(dims.length -1);
-			cf.get().set(sumSq.a.getRealFloat());
+			cf.get().set(sumSq.getA().getRealFloat());
 			// 3. The mean
 			cf.fwd(dims.length -1);
-			cf.get().set(sum.a.getRealFloat() / sum.b[0]);
+			cf.get().set(sum.getA().getRealFloat() / sum.getB()[0]);
 			// 4. The stdDev
 			cf.fwd(dims.length -1);
-			cf.get().set((float)((sumSq.a.getRealFloat() - (Math.pow(sum.a.getRealFloat(), 2) / sum.b[0])) / sum.b[0]));
+			cf.get().set((float)((sumSq.getA().getRealFloat() - (Math.pow(sum.getA().getRealFloat(), 2) / sum.getB()[0])) / sum.getB()[0]));
 		}
 		
 		try {

@@ -31,7 +31,6 @@ import java.util.Iterator;
 import net.imglib2.Cursor;
 import net.imglib2.FlatIterationOrder;
 import net.imglib2.Interval;
-import net.imglib2.IterableRealInterval;
 import net.imglib2.Positionable;
 import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessible;
@@ -198,12 +197,6 @@ public class RandomAccessibleImgProxy<T extends NumericType<T>, RAI extends Rand
 	public Object iterationOrder()
 	{
 		return new FlatIterationOrder( this );
-	}
-
-	@Override
-	public boolean equalIterationOrder( final IterableRealInterval< ? > f )
-	{
-		return iterationOrder().equals( f.iterationOrder() );
 	}
 
 	@Override
