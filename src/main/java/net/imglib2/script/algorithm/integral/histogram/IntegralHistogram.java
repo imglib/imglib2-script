@@ -249,6 +249,7 @@ public class IntegralHistogram
 		// The dimensions that are neither the rowDimension nor the histogram bins 
 		final int[] rowDims = new int[lastDimensionIndex -1];
 		// For every bin of the histogram:
+		rh.setPosition(0, lastDimensionIndex);
 		for (long bin = 0; bin < integralHistogram.dimension(lastDimensionIndex); ++bin) {
 			// Integrate one dimension at a time
 			//
