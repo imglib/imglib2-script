@@ -27,6 +27,7 @@
 package net.imglib2.script.math;
 
 import java.awt.Container;
+import java.awt.Image;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -120,7 +121,7 @@ public class Compute {
 					throw new Exception("Images have different dimensions!");
 				}
 
-			if ( ! first.equalIterationOrder(iri)) {
+			if ( ! first.iterationOrder().equals(iri.iterationOrder())) {
 				System.out.println("Images are of incompatible container types!");
 				System.out.println("First: " + first.getClass() + " is incompatible with: " + iri.getClass());
 				return false;

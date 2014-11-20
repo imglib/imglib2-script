@@ -24,68 +24,48 @@
  * #L%
  */
 
-package script.imglib.test;
+package net.imglib2.script;
 
 import ij.ImageJ;
-import net.imglib2.RandomAccessibleInterval;
+import ij.ImagePlus;
+import ij.gui.Roi;
+import ij.process.FloatProcessor;
 import net.imglib2.img.Img;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.sampler.special.ConstantRandomAccessible;
 import net.imglib2.script.math.Add;
 import net.imglib2.script.view.RectangleROI;
+import net.imglib2.type.NativeType;
+import net.imglib2.type.numeric.NumericType;
 import net.imglib2.type.numeric.real.FloatType;
-import net.imglib2.view.Views;
 
 /**
  * TODO
  *
  */
-public class Rois2 {
+public class Rois {
 
-	
-	static public final void main(String[] args) {
+	static public final <T extends NumericType<T> & NativeType<T>> void main(final String[] args) {
 		
-		// Generate some data:
-		// A virtual image with a ROI filled with value 127
-		RandomAccessibleInterval<FloatType> img1 =
-			// The 'image'
-			Views.interval(
-				// The outside, with value 0
-				Views.extendValue(
-					// The ROI filled with value 127
-					Views.interval(
-						new ConstantRandomAccessible<FloatType>(new FloatType(127), 2),
-						// The domain of the ROI
-						new long[]{100, 100},
-						new long[]{399, 399}),
-					new FloatType(0)),
-				// The domain of the image
-				new long[]{0, 0},
-				new long[]{511, 511});
+		// Generate some data
+		final FloatProcessor b1 = new FloatProcessor(512, 512);
+		b1.setValue(127);
+		b1.setRoi(new Roi(100, 100, 200, 200));
+		b1.fill();
 		
-		// A virtual image with a ROI filled with value 128
-		RandomAccessibleInterval<FloatType> img2 =
-			// The 'image'
-			Views.interval(
-				// The outside, with value 0
-				Views.extendValue(
-					// The ROI filled with value 128
-					Views.interval(
-						new ConstantRandomAccessible<FloatType>(new FloatType(128), 2),
-						// The domain of the ROI
-						new long[]{10, 30},
-						new long[]{209, 229}),
-					new FloatType(0)),
-				// The domain of the image
-				new long[]{0, 0},
-				new long[]{511, 511});
+		final FloatProcessor b2 = new FloatProcessor(512, 512);
+		b2.setValue(128);
+		b2.setRoi(new Roi(10, 30, 200, 200));
+		b2.fill();
+		
+		final Img<T> img1 = ImageJFunctions.wrap(new ImagePlus("1", b1));
+		final Img<T> img2 = ImageJFunctions.wrap(new ImagePlus("2", b2));
+		
 		
 		// Add two ROIs of both images
-		RectangleROI<FloatType> r1 = new RectangleROI<FloatType>(img1, 50, 50, 200, 200);
-		RectangleROI<FloatType> r2 = new RectangleROI<FloatType>(img2, 50, 50, 200, 200);
+		final RectangleROI<T> r1 = new RectangleROI<T>(img1, 50, 50, 200, 200);
+		final RectangleROI<T> r2 = new RectangleROI<T>(img2, 50, 50, 200, 200);
 		try {
-			// The 'result' is the first image that actually has any data in it!
-			Img<FloatType> result = new Add(r1, r2).asImage(1);
+			final Img<FloatType> result = new Add(r1, r2).asImage(1);
 			
 			new ImageJ();
 			
@@ -95,9 +75,8 @@ public class Rois2 {
 			ImageJFunctions.show(img2, "img2");
 			ImageJFunctions.show(result, "added rois");
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}
 }
-

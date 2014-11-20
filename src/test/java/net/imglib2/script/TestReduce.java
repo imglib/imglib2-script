@@ -24,7 +24,7 @@
  * #L%
  */
 
-package script.imglib.test;
+package net.imglib2.script;
 
 import net.imglib2.IterableRealInterval;
 import net.imglib2.RealCursor;

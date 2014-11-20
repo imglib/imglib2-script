@@ -24,7 +24,7 @@
  * #L%
  */
 
-package script.imglib.test;
+package net.imglib2.script;
 
 import ij.IJ;
 import ij.ImageJ;

@@ -28,15 +28,15 @@ package net.imglib2.script;
 
 import ij.ImagePlus;
 import ij.io.FileSaver;
+import io.scif.config.SCIFIOConfig;
+import io.scif.config.SCIFIOConfig.ImgMode;
+import io.scif.img.ImgIOException;
+import io.scif.img.ImgOpener;
 import net.imglib2.exception.ImgLibException;
 import net.imglib2.exception.IncompatibleTypeException;
 import net.imglib2.img.ImagePlusAdapter;
 import net.imglib2.img.Img;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import io.scif.config.SCIFIOConfig;
-import io.scif.config.SCIFIOConfig.ImgMode;
-import io.scif.img.ImgIOException;
-import io.scif.img.ImgOpener;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;
 
@@ -65,14 +65,14 @@ public class ImgLib {
 		return (Img<T>) new ImgOpener().openImg(pathOrUrl, new SCIFIOConfig().imgOpenerSetImgModes( ImgMode.CELL ));
 	}
 
-	/** Wrap an ImageJ's {@link ImagePlus} as an Imglib {@link Image} of the appropriate type.
+	/** Wrap an ImageJ's {@link ImagePlus} as an Imglib {@link Img} of the appropriate type.
 	 * The data is not copied, but merely accessed with a PlanarArrayContainer.
 	 * @see ImagePlusAdapter */
 	public static<T extends RealType<T> & NativeType<T>> Img<T> wrap(final ImagePlus imp) {
 		return ImagePlusAdapter.<T>wrap(imp);
 	}
 
-	/** Wrap an Imglib's {@link Image} as an ImageJ's {@link ImagePlus} of the appropriate type.
+	/** Wrap an Imglib's {@link Img} as an ImageJ's {@link ImagePlus} of the appropriate type.
 	 * The data is not copied, but accessed with a special-purpose VirtualStack subclass. 
 	 * @throws ImgLibException */
 	static public final <T extends RealType<T>> ImagePlus wrap(final Img<T> img) throws ImgLibException {
@@ -80,7 +80,7 @@ public class ImgLib {
 		return wrap(img, "");
 	}
 	
-	/** Wrap an Imglib's {@link Image} as an ImageJ's {@link ImagePlus} of the appropriate type.
+	/** Wrap an Imglib's {@link Img} as an ImageJ's {@link ImagePlus} of the appropriate type.
 	 * The data is not copied, but accessed with a special-purpose VirtualStack subclass. 
 	 * @throws ImgLibException */
 	static public final <T extends RealType<T>> ImagePlus wrap(final Img<T> img, final String title) throws ImgLibException {
@@ -90,14 +90,14 @@ public class ImgLib {
 		return ImageJFunctions.wrap(img, title);
 	}
 	
-	/** Wrap an Imglib's {@link Image} as an ImageJ's {@link ImagePlus} of the appropriate type.
+	/** Wrap an Imglib's {@link Img} as an ImageJ's {@link ImagePlus} of the appropriate type.
 	 * The data is not copied, but accessed with a special-purpose VirtualStack subclass. 
 	 * @throws ImgLibException */
 	static public final <T extends RealType<T>> ImagePlus show(final Img<T> img) throws ImgLibException {
 		return show(img, "");
 	}
 	
-	/** Wrap an Imglib's {@link Image} as an ImageJ's {@link ImagePlus} of the appropriate type.
+	/** Wrap an Imglib's {@link Img} as an ImageJ's {@link ImagePlus} of the appropriate type.
 	 * The data is not copied, but accessed with a special-purpose VirtualStack subclass. 
 	 * @throws ImgLibException */
 	static public final <T extends RealType<T>> ImagePlus show(final Img<T> img, final String title) throws ImgLibException {
