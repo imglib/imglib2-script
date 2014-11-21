@@ -63,12 +63,12 @@ public class TestHistograms {
 	public void testFeatures() {
 		try {
 			Img<UnsignedByteType> img = (Img<UnsignedByteType>) new ImgOpener().openImgs("/home/albert/Desktop/t2/bridge-crop-streched-smoothed.tif").get(0);
-			ImgLib.wrap(img, "Original").show();
+			ImgLib.wrap(img, "Original");
 			long[] radius = new long[]{10, 10}; // radius=1 is equivalent to ImageJ's radius=1 in RankFilters
 			LinearHistogram<UnsignedByteType> lh = new LinearHistogram<UnsignedByteType>(256, img.numDimensions(), new UnsignedByteType(0), new UnsignedByteType(255));
 			Img<UnsignedShortType> integralHistogram = IntegralHistogram.create(img, lh, new UnsignedShortType());
 			HistogramFeatures<UnsignedByteType, UnsignedShortType> features = new HistogramFeatures<UnsignedByteType, UnsignedShortType>(img, integralHistogram, lh, radius);
-			ImgLib.wrap(features, "Features for " + radius[0] + "x" + radius[1]).show();
+			ImgLib.wrap(features, "Features for " + radius[0] + "x" + radius[1]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,7 +78,7 @@ public class TestHistograms {
 		try {
 			ij.Prefs.setThreads(1);
 			Img<UnsignedByteType> img = (Img<UnsignedByteType>) new ImgOpener().openImgs("/home/albert/Desktop/t2/bridge.tif").get(0);
-			ImgLib.wrap(img, "Original").show();
+			ImgLib.wrap(img, "Original");
 			
 			long t0 = System.currentTimeMillis();
 			final UnsignedByteType min = new UnsignedByteType(0);
@@ -110,13 +110,13 @@ public class TestHistograms {
 			System.out.println("Regular features: " + (t3 - t2) + " ms");
 			
 			// Show them both
-			ImgLib.wrap(features, "Integral Histogram Features for " + radius[0] + "x" + radius[1]).show();
+			ImgLib.wrap(features, "Integral Histogram Features for " + radius[0] + "x" + radius[1]);
 			ImageStack stack = new ImageStack(imp.getWidth(), imp.getHeight());
 			stack.addSlice("min", ip1);
 			stack.addSlice("max", ip2);
 			stack.addSlice("mean", ip3);
 			stack.addSlice("median", ip4);
-			new ImagePlus("Regular features for " + radius[0] + "x" + radius[1], stack).show();
+			new ImagePlus("Regular features for " + radius[0] + "x" + radius[1], stack);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -152,7 +152,7 @@ public class TestHistograms {
 		assertTrue("Test image isn't right", sum == 36);
 		//
 		try {
-			ImgLib.wrap(img, "image").show();
+			ImgLib.wrap(img, "image");
 		} catch (ImgLibException e) {
 			e.printStackTrace();
 		}
@@ -179,7 +179,7 @@ public class TestHistograms {
 		System.out.println("Cummulative Histogram: " + sb.toString());
 		
 		try {
-			ImgLib.wrap((Img)h, "histogram").show();
+			ImgLib.wrap((Img)h, "histogram");
 		} catch (ImgLibException e) {
 			e.printStackTrace();
 		}
@@ -272,7 +272,7 @@ public class TestHistograms {
 		HistogramFeatures<UnsignedByteType, UnsignedByteType> features =
 				new HistogramFeatures<UnsignedByteType, UnsignedByteType>(img, integralHistogram, lh, radius);
 		try {
-			ImgLib.wrap(features, "features for 0x0").show();
+			ImgLib.wrap(features, "features for 0x0");
 		} catch (ImgLibException e) {
 			e.printStackTrace();
 		}
@@ -383,7 +383,7 @@ public class TestHistograms {
 		
 		// Show img
 		try {
-			ImgLib.wrap(img, "2x2x2").show();
+			ImgLib.wrap(img, "2x2x2");
 		} catch (ImgLibException e1) {
 			e1.printStackTrace();
 		}
@@ -396,7 +396,7 @@ public class TestHistograms {
 			while (c1.hasNext()) {
 				c1.next().setReal(c2.next().getRealDouble());
 			}
-			ii.getImagePlus().show();
+			ii.getImagePlus();
 		} catch (ImgLibException e) {
 			e.printStackTrace();
 		}
