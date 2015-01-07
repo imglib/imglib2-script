@@ -1,5 +1,6 @@
 package net.imglib2.script.algorithm.integral;
 
+import net.imagej.ImgPlus;
 import net.imglib2.Cursor;
 import net.imglib2.Interval;
 import net.imglib2.RandomAccess;
@@ -16,7 +17,6 @@ import net.imglib2.img.basictypeaccess.array.IntArray;
 import net.imglib2.img.basictypeaccess.array.LongArray;
 import net.imglib2.img.basictypeaccess.array.ShortArray;
 import net.imglib2.img.planar.PlanarImg;
-import net.imglib2.meta.ImgPlus;
 import net.imglib2.script.algorithm.fn.ImgProxy;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.IntegerType;
