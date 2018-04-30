@@ -62,6 +62,9 @@ Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 		<imglib2.version>5.1.0</imglib2.version>
 		<imglib2-ij.version>2.0.0-beta-40</imglib2-ij.version>
 		<scifio.version>0.35.0</scifio.version>
+
+		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
+		<releaseProfiles>deploy-to-imagej</releaseProfiles>
 	</properties>
 
 	<scm>
