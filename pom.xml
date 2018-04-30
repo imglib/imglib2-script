@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>imglib2-script</artifactId>
-	<version>0.2.3-SNAPSHOT</version>
+	<version>0.2.4-SNAPSHOT</version>
 
 	<name>ImgLib2 Scripting</name>
 	<description>ImgLib2 scripting infrastructure.</description>
