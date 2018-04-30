@@ -26,13 +26,13 @@
  */
 package net.imglib2.script.algorithm.integral.histogram;
 
+import net.imglib2.Dimensions;
+import net.imglib2.FinalDimensions;
 import net.imglib2.Localizable;
 import net.imglib2.RandomAccess;
 import net.imglib2.img.Img;
-import net.imglib2.img.array.ArrayImgFactory;
-import net.imglib2.img.list.ListImgFactory;
-import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;
+import net.imglib2.util.Util;
 
 /**
  * 
@@ -57,7 +57,6 @@ public abstract class Histogram<T extends RealType<T>>
 	 * @param max The maximum value, at which the last bin ends; all values over max will be added to the last bin.
 	 * @param op The type in which operations will be computed.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Histogram(
 			final int nBins,
 			final int numDimensions,
@@ -74,9 +73,8 @@ public abstract class Histogram<T extends RealType<T>>
 		this.range.set(max);
 		this.range.sub(min);
 		//
-		this.binValues = min instanceof NativeType?
-				  new ArrayImgFactory().create(new long[]{nBins}, (NativeType)min.createVariable())
-				: new ListImgFactory<T>().create(new long[]{nBins}, min.createVariable());
+		final Dimensions dims = new FinalDimensions( nBins );
+		this.binValues = Util.getSuitableImgFactory( dims, min ).create( dims );
 		this.accessBinValues = this.binValues.randomAccess();
 	}
 	

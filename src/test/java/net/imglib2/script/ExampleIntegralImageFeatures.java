@@ -33,7 +33,7 @@ import net.imglib2.RandomAccess;
 import net.imglib2.converter.Converter;
 import net.imglib2.exception.ImgLibException;
 import net.imglib2.img.Img;
-import net.imglib2.img.array.ArrayImgFactory;
+import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.script.algorithm.integral.FastIntegralImg;
 import net.imglib2.script.algorithm.integral.IntegralCursor;
 import net.imglib2.type.numeric.IntegerType;
@@ -83,8 +83,7 @@ public class ExampleIntegralImageFeatures
 		final long[] dims = new long[integralImg.numDimensions() + 1];
 		for (int d = 0; d<dims.length -1; ++d) dims[d] = integralImg.dimension(d);
 		dims[dims.length -1] = NUM_FEATURES;
-		final Img<FloatType> featureStack = new FloatType().createSuitableNativeImg(
-				new ArrayImgFactory<FloatType>(), dims);
+		final Img< FloatType > featureStack = ArrayImgs.floats( dims );
 		final RandomAccess<FloatType> cf = featureStack.randomAccess();
 		
 		while (c1.hasNext()) {

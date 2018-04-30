@@ -39,6 +39,7 @@ import net.imglib2.RandomAccess;
 import net.imglib2.exception.ImgLibException;
 import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
+import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.img.imageplus.ImagePlusImg;
 import net.imglib2.img.imageplus.ImagePlusImgFactory;
 import net.imglib2.script.algorithm.integral.histogram.Histogram;
@@ -160,10 +161,7 @@ public class TestHistograms {
 	 */
 	@Test
 	public <T extends IntegerType<T> & NativeType<T> >void testHistogramOf3x3Img() {
-		Img<UnsignedByteType> img =
-				new UnsignedByteType().createSuitableNativeImg(
-						new ArrayImgFactory<UnsignedByteType>(),
-						new long[]{3, 3});
+		Img< UnsignedByteType > img = ArrayImgs.unsignedBytes( 3, 3 );
 		Cursor<UnsignedByteType> c = img.cursor();
 		long[] position = new long[3];
 		int sum = 0;
@@ -324,10 +322,7 @@ public class TestHistograms {
 	 */
 	@Test
 	public <T extends IntegerType<T> & NativeType<T> >void testHistogramOf3x3x3Img() {
-		Img<UnsignedByteType> img =
-				new UnsignedByteType().createSuitableNativeImg(
-						new ArrayImgFactory<UnsignedByteType>(),
-						new long[]{3, 3, 3});
+		Img< UnsignedByteType > img = ArrayImgs.unsignedBytes( 3, 3, 3 );
 		Cursor<UnsignedByteType> c = img.cursor();
 		long[] position = new long[3];
 		int sum = 0;
@@ -383,10 +378,7 @@ public class TestHistograms {
 	 */
 	@Test
 	public <T extends IntegerType<T> & NativeType<T>> void testHistogramOf2x2x2Img() {
-		Img<UnsignedByteType> img =
-				new UnsignedByteType().createSuitableNativeImg(
-						new ArrayImgFactory<UnsignedByteType>(),
-						new long[]{2, 2, 2});
+		Img< UnsignedByteType > img = ArrayImgs.unsignedBytes( 2, 2, 2 );
 		Cursor<UnsignedByteType> c = img.cursor();
 		long[] position = new long[3];
 		int sum = 0;
@@ -416,7 +408,7 @@ public class TestHistograms {
 		
 		// Show integral histogram
 		try {
-			ImagePlusImg<UnsignedByteType,?> ii = new ImagePlusImgFactory<UnsignedByteType>().create(h, new UnsignedByteType());
+			ImagePlusImg< UnsignedByteType, ? > ii = new ImagePlusImgFactory<>( new UnsignedByteType() ).create( h );
 			Cursor<UnsignedByteType> c1 = ii.cursor();
 			Cursor<T> c2 = h.cursor();
 			while (c1.hasNext()) {

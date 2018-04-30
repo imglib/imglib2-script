@@ -81,7 +81,7 @@ public class ExampleIntegralHistograms<T extends RealType<T> & NativeType<T>>
 		long[] dims = new long[img.numDimensions() + 1];
 		for (int d=0; d<dims.length-1; ++d) dims[d] = img.dimension(d);
 		dims[dims.length -1] = numFeatures;
-		Img<T> featureStack = img.factory().create(dims, min.createVariable());
+		Img< T > featureStack = img.factory().create( dims );
 		
 		System.out.println("Created stack of features with dimensions: " + Util.printCoordinates(dims));
 		
@@ -148,7 +148,7 @@ public class ExampleIntegralHistograms<T extends RealType<T> & NativeType<T>>
 		
 		new ImageJ();
 		if (dims.length > 3) {
-			ImagePlusImg<T, ?> copy = new ImagePlusImgFactory<T>().create(featureStack, featureStack.firstElement().createVariable());
+			ImagePlusImg< T, ? > copy = new ImagePlusImgFactory<>( featureStack.firstElement() ).create( featureStack );
 			Cursor<T> c1 = copy.cursor();
 			Cursor<T> c2 = featureStack.cursor();
 			while (c1.hasNext()) {
@@ -195,7 +195,7 @@ public class ExampleIntegralHistograms<T extends RealType<T> & NativeType<T>>
 				radius2 = new long[]{10, 10};
 				break;
 			}
-			Img<UnsignedByteType> img = new ImgOpener().openImg(src, new ArrayImgFactory<UnsignedByteType>(), new UnsignedByteType());
+			Img< UnsignedByteType > img = new ImgOpener().openImgs( src, new ArrayImgFactory<>( new UnsignedByteType() ) ).get( 0 );
 			UnsignedByteType min = new UnsignedByteType(0);
 			UnsignedByteType max = new UnsignedByteType(255);
 			new ExampleIntegralHistograms<UnsignedByteType>(img, min, max, radius1, radius2);

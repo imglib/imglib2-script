@@ -79,7 +79,7 @@ public class IntegralHistogram
 		}
 		dims[dims.length -1] = histogram.nBins();
 		// Create an image to hold the integral histogram
-		final Img<R> integralHistogram = type.createSuitableNativeImg(new ArrayImgFactory<R>(), dims);
+		final Img< R > integralHistogram = new ArrayImgFactory<>( type ).create( dims );
 		
 		switch ( img.numDimensions() ) {
 			case 1:

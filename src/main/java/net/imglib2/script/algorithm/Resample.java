@@ -122,7 +122,7 @@ public class Resample<N extends NumericType<N>> extends ImgProxy<N>
 
 	static private final <T extends RealType<T>> Img<T> processReal(final Img<T> img, final long[] dim, final Mode mode) throws Exception {
 
-		final Img<T> res = img.factory().create(dim, img.firstElement().createVariable());
+		final Img< T > res = img.factory().create( dim );
 
 		InterpolatorFactory<T,RandomAccessible<T>> ifac;
 		switch (mode) {

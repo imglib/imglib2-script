@@ -33,6 +33,7 @@ import net.imglib2.RandomAccess;
 import net.imglib2.exception.ImgLibException;
 import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
+import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.script.algorithm.integral.histogram.IntegralHistogram;
 import net.imglib2.script.algorithm.integral.histogram.LinearHistogram;
 import net.imglib2.type.NativeType;
@@ -56,9 +57,7 @@ public class IntegralHistogramExpectationChecking {
 	@Test
 	public <R extends IntegerType<R> & NativeType<R>> void testIntegralHistogram1d() {
 		// Create a 1d image with values 0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7
-		Img<UnsignedByteType> img =
-				new UnsignedByteType().createSuitableNativeImg(
-						new ArrayImgFactory<UnsignedByteType>(), new long[]{16});
+		Img< UnsignedByteType > img = ArrayImgs.unsignedBytes( 16 );
 		Cursor<UnsignedByteType> c = img.cursor();
 		int i = 0;
 		int next = 0;
@@ -99,10 +98,7 @@ public class IntegralHistogramExpectationChecking {
 	@Test
 	public <R extends IntegerType<R> & NativeType<R>> void testIntegralHistogram2d() {
 		// Create a 2d image with values 0-9 in every dimension, so bottom right is 81.
-		Img<UnsignedByteType> img =
-				new UnsignedByteType().createSuitableNativeImg(
-						new ArrayImgFactory<UnsignedByteType>(),
-						new long[]{10, 10});
+		Img< UnsignedByteType > img = ArrayImgs.unsignedBytes( 10, 10 );
 		long[] p = new long[2];
 		Cursor<UnsignedByteType> c = img.cursor();
 		while (c.hasNext()) {
@@ -142,7 +138,7 @@ public class IntegralHistogramExpectationChecking {
 		try {
 			Img<UnsignedByteType> img1 = (Img<UnsignedByteType>) new ImgOpener().openImgs("/home/albert/Desktop/t2/bridge-crop.tif").get(0);
 			
-			Img<UnsignedVariableBitLengthType> img2 = new UnsignedVariableBitLengthType(10).createSuitableNativeImg(new ArrayImgFactory<UnsignedVariableBitLengthType>(), Intervals.dimensionsAsLongArray(img1));
+			Img< UnsignedVariableBitLengthType > img2 = new ArrayImgFactory<>( new UnsignedVariableBitLengthType( 10 ) ).create( img1 );
 
 			Cursor<UnsignedByteType> c1 = img1.cursor();
 			Cursor<UnsignedVariableBitLengthType> c2 = img2.cursor();

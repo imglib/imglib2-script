@@ -47,8 +47,7 @@ public class Duplicate<T extends NumericType<T>> extends ImgProxy<T>
 	}
 	
 	private static final <R extends NumericType<R> & NativeType<R>> Img<R> copyAsArrayImg(final IterableInterval<R> img) {
-		final R v = img.firstElement().createVariable();
-		final Img<R> copy = new ArrayImgFactory<R>().create(img, v);
+		final Img< R > copy = new ArrayImgFactory<>( img.firstElement() ).create( img );
 		if (img.iterationOrder().equals(copy.iterationOrder())) {
 			final Cursor<R> c1 = img.cursor();
 			final Cursor<R> c2 = copy.cursor();

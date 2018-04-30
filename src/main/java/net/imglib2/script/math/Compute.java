@@ -166,7 +166,7 @@ public class Compute {
 
 				// Store results on a new empty result image
 				final IterableRealInterval<?> first = images.iterator().next();
-				final Img<R> result = new ArrayImgFactory<R>().create(Util.intervalDimensions(first), outputType);
+				final Img< R > result = new ArrayImgFactory<>( outputType ).create( Util.intervalDimensions( first ) );
 
 				// Duplicate all functions: also sets a new cursor for each that has one, so it's unique and reset.
 				final IFunction[] functions = new IFunction[ numThreads ];
@@ -222,7 +222,7 @@ public class Compute {
 				return result;
 			}
 			// Operations that only involve numbers (for consistency)
-			final Img<R> result = new ArrayImgFactory<R>().create(new long[1], outputType);
+			final Img< R > result = new ArrayImgFactory<>( outputType ).create( 1 );
 
 			loop(result.cursor(), result.size(), op);
 

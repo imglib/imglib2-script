@@ -151,14 +151,14 @@ public class FastIntegralImg<R extends RealType<R>, T extends NativeType<T> & Nu
 	}
 	
 	static private final <R extends NumericType<R>, T extends NativeType<T> & NumericType<T>> Img<T> create(final Img<R> img, final T type, final Converter<R, T> converter) {
-		final Img<T> iimg = type.createSuitableNativeImg(new ArrayImgFactory<T>(), dimensions(img));
+		final Img< T > iimg = new ArrayImgFactory<>( type ).create( img );
 		integrateInto(img, iimg, type, converter);
 		return iimg;
 	}
 	
 	static private final <R extends RealType<R>, T extends NativeType<T> & NumericType<T>> Img<T> create(final Img<R> img, final Converter<R, T> converter) {
 		T type = computeSmallestType(img);
-		final Img<T> iimg = type.createSuitableNativeImg(new ArrayImgFactory<T>(), dimensions(img));
+		final Img< T > iimg = new ArrayImgFactory<>( type ).create( img );
 		integrateInto(img, iimg, type, converter);
 		return iimg;
 	}

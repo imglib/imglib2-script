@@ -50,7 +50,7 @@ public class CompareIntegralImages
 	static public final void main(String[] arg) {
 		final String src = "/home/albert/lab/TEM/abd/microvolumes/Seg/180-220-int/180-220-int-00.tif";
 		try {
-			final Img<UnsignedByteType> img = new ImgOpener().openImg(src, new ArrayImgFactory<UnsignedByteType>(), new UnsignedByteType());
+			final Img< UnsignedByteType > img = new ImgOpener().openImgs( src, new ArrayImgFactory<>( new UnsignedByteType() ) ).get( 0 );
 			
 			// copy as short
 			Img<UnsignedShortType> copyShort = ArrayImgs.unsignedShorts(Intervals.dimensionsAsLongArray(img));

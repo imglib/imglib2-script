@@ -65,7 +65,7 @@ public class HistogramFeatures<T extends RealType<T> & NativeType<T>, P extends 
 		for (int d=0; d<dims.length -1; ++d) dims[d] = img.dimension(d);
 		dims[dims.length -1] = NUM_FEATURES;
 		
-		final Img<R> features = img.factory().create(dims, img.firstElement().createVariable());
+		final Img< R > features = img.factory().create( dims );
 		final RandomAccess<R> fr = features.randomAccess();
 		
 		// One histogram per pixel position, representing the histogram of the window centered at that pixel
