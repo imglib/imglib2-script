@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>net.imglib2</groupId>
 		<artifactId>pom-imglib2</artifactId>
-		<version>11.0.0</version>
+		<version>12.0.0</version>
 		<relativePath />
 	</parent>
 
@@ -59,8 +59,8 @@ Martin Horn, Steffen Jaensch, Lee Kamentsky, Larry Lindsey, Melissa Linkert,
 Mark Longair, Brian Northan, Nick Perry, Curtis Rueden, Johannes Schindelin,
 Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 
-		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
-		<releaseProfiles>deploy-to-imagej</releaseProfiles>
+		<!-- NB: Deploy releases to the SciJava Maven repository. -->
+		<releaseProfiles>deploy-to-scijava</releaseProfiles>
 
 		<!-- NB: Disable the strict Java 8 doclint. -->
 		<additionalparam>-Xdoclint:none</additionalparam>
@@ -84,8 +84,8 @@ Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 	<repositories>
 		<!-- NB: for SciJava dependencies -->
 		<repository>
-			<id>imagej.public</id>
-			<url>https://maven.imagej.net/content/groups/public</url>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
 		</repository>
 	</repositories>
 
