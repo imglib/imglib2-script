@@ -63,7 +63,7 @@ Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 		<releaseProfiles>deploy-to-scijava</releaseProfiles>
 
 		<!-- NB: Disable the strict Java 8 doclint. -->
-		<additionalparam>-Xdoclint:none</additionalparam>
+		<doclint>none</doclint>
 	</properties>
 
 	<scm>
