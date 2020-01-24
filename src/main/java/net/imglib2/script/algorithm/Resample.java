@@ -146,7 +146,7 @@ public class Resample<N extends NumericType<N>> extends ImgProxy<N>
 			c2.fwd();
 			c2.localize(d); // TODO "localize" seems to indicate the opposite of what it does
 			for (int i=0; i<d.length; i++) p[i] = d[i] * s[i];
-			inter.setPosition(p);
+			inter.move(p);
 			c2.get().set(inter.get());			
 		}
 		return res;
