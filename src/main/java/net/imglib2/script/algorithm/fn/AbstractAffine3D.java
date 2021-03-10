@@ -190,7 +190,7 @@ public abstract class AbstractAffine3D<T extends NumericType<T>> extends ImgProx
 			// Ensure Z dimension is not altered if scaleZ is 1:
 			if (Math.abs(m[10] - 1.0f) < 0.000001 && 0 == m[8] && 0 == m[9]) {
 				long[] d = transform.getNewImageSize();
-				d[2] = img.dimension(2); // 0-based: '2' is the third dimension
+				d[2] = img.max(2)-img.min(2); // 0-based: '2' is the third dimension
 				transform.setNewImageSize(d);
 			}
 		} else {
