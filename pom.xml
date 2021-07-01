@@ -3,12 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.imglib2</groupId>
-		<artifactId>pom-imglib2</artifactId>
-		<version>13.0.0</version>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>30.0.0</version>
 		<relativePath />
 	</parent>
 
+	<groupId>net.imglib2</groupId>
 	<artifactId>imglib2-script</artifactId>
 	<version>0.2.5-SNAPSHOT</version>
 
@@ -60,7 +61,7 @@ Mark Longair, Brian Northan, Nick Perry, Curtis Rueden, Johannes Schindelin,
 Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
-		<releaseProfiles>deploy-to-scijava</releaseProfiles>
+		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
 
 		<!-- NB: Disable the strict Java 8 doclint. -->
 		<doclint>none</doclint>
@@ -77,8 +78,8 @@ Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 		<url>https://github.com/imglib/imglib2-script/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/imglib/imglib2-script</url>
+		<system>GitHub Actions</system>
+		<url>https://github.com/imglib/imglib2-script/actions</url>
 	</ciManagement>
 
 	<repositories>
