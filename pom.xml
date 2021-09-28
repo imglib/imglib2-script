@@ -31,12 +31,40 @@
 
 	<developers>
 		<developer>
-			<id>TODO</id>
+			<name>None</name>
 		</developer>
 	</developers>
 	<contributors>
 		<contributor>
-			<name>TODO</name>
+			<name>Albert Cardona</name>
+			<url>https://imagej.net/people/acardona</url>
+			<roles><role>founder</role></roles>
+			<properties><id>acardona</id></properties>
+		</contributor>
+		<contributor>
+			<name>Curtis Rueden</name>
+			<url>https://imagej.net/people/ctrueden</url>
+			<properties><id>ctrueden</id></properties>
+		</contributor>
+		<contributor>
+			<name>Jonathan Hale</name>
+			<url>https://imagej.net/people/Squareys</url>
+			<properties><id>Squareys</id></properties>
+		</contributor>
+		<contributor>
+			<name>Mark Hiner</name>
+			<url>https://imagej.net/people/hinerm</url>
+			<properties><id>hinerm</id></properties>
+		</contributor>
+		<contributor>
+			<name>Tobias Pietzsch</name>
+			<url>https://imagej.net/people/tpietzsch</url>
+			<properties><id>tpietzsch</id></properties>
+		</contributor>
+		<contributor>
+			<name>Johannes Schindelin</name>
+			<url>https://imagej.net/people/dscho</url>
+			<properties><id>dscho</id></properties>
 		</contributor>
 	</contributors>
 
