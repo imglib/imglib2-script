@@ -11,7 +11,7 @@
 
 	<groupId>net.imglib2</groupId>
 	<artifactId>imglib2-script</artifactId>
-	<version>0.2.5-SNAPSHOT</version>
+	<version>0.2.6-SNAPSHOT</version>
 
 	<name>ImgLib2 Scripting</name>
 	<description>ImgLib2 scripting infrastructure.</description>
