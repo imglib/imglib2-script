@@ -11,7 +11,7 @@
 
 	<groupId>net.imglib2</groupId>
 	<artifactId>imglib2-script</artifactId>
-	<version>0.2.5-SNAPSHOT</version>
+	<version>0.2.5</version>
 
 	<name>ImgLib2 Scripting</name>
 	<description>ImgLib2 scripting infrastructure.</description>
@@ -98,7 +98,7 @@ Jean-Yves Tinevez and Michael Zinsmaier.</license.copyrightOwners>
 	<scm>
 		<connection>scm:git:git://github.com/imglib/imglib2-script</connection>
 		<developerConnection>scm:git:git@github.com:imglib/imglib2-script</developerConnection>
-		<tag>HEAD</tag>
+		<tag>imglib2-script-0.2.5</tag>
 		<url>https://github.com/imglib/imglib2-script</url>
 	</scm>
 	<issueManagement>
